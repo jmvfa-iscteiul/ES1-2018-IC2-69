@@ -1,6 +1,6 @@
 //tentativa
 
-class putas{
+class pautas{
 	
 }
 
