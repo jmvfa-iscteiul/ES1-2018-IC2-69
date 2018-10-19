@@ -42,6 +42,11 @@ public class InterGraf {
 	private JFrame frame;
 	private JTextField textField;
 
+//	********************************************************************+
+	
+//	 OLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	
+//	********************************************************************+
 	/**
 	 * Launch the application.
 	 */
