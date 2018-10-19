@@ -10,43 +10,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import javax.swing.JInternalFrame;
 
-public class InterGraf {
-
-	
-//	****************************************************************************
-	
-	//ATRASADINHOS!!!!!
-	
-	
-//	*****************************************************************************
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+public class InterGraf {	
 	
 	private JFrame frame;
 	private JTextField textField;
-
-//	********************************************************************+
-	
-//	 OLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	
-//	********************************************************************+
 	/**
 	 * Launch the application.
 	 */
