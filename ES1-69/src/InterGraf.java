@@ -12,6 +12,33 @@ import javax.swing.JInternalFrame;
 
 public class InterGraf {
 
+	
+//	****************************************************************************
+	
+	//ATRASADINHOS!!!!!
+	
+	
+//	*****************************************************************************
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private JFrame frame;
 	private JTextField textField;
 
