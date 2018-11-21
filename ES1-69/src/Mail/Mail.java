@@ -33,7 +33,6 @@ public class Mail{
 			System.out.println("messages.length---" + messages.length);
 			
 			int n = messages.length;
-			//i < n
 			for(int i = 0; i < 75; i++) {
 				Message message = messages[i];
 				//boolean existeProcura = message.getContent().toString().contains(procura);
