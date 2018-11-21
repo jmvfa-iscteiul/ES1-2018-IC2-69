@@ -1,7 +1,8 @@
 //tentativa
 
 class pautas{
-	
+	int te = 1;
+	//estou a conseguir
 }
 
 
