@@ -5,5 +5,9 @@
 	<classpathentry kind="lib" path="C:/Users/Madal/.m2/repository/org/twitter4j/twitter4j-core/4.0.7/twitter4j-core-4.0.7.jar"/>
 	<classpathentry kind="lib" path="/Users/Duro/Downloads/java mail API/javax.mail-1.4.4.jar"/>
 	<classpathentry kind="lib" path="/Users/Duro/Downloads/java mail API/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/flibo/Desktop/Puta/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/flibo/Desktop/Puta/javax.mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/flibo/Desktop/Puta/restfb-2.10.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/flibo/Desktop/Puta/twitter4j-core-4.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -23,7 +23,7 @@ import javax.mail.Session;
 import javax.mail.Store;
 
 public class Mail {
-
+	
    public static void fetch(String pop3Host, String storeType, String user,String password, String procura) {
       try {
          // create properties field

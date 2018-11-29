@@ -1,5 +1,6 @@
 package Twitter;
 
+import java.util.ArrayList;
 import java.util.List;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -7,6 +8,9 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public final class searchTwitter  {
+	
+	private static ArrayList<String> search = new ArrayList<String>();
+	
 	public static void main(String[] args) {
         try {
         	ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -25,7 +29,8 @@ public final class searchTwitter  {
 				//if (status.getUser().getName() != null && status.getUser().getName().contains("ISCTE")) {
             		System.out.println("----------------");
             		System.out.println("nº" + (counterTotal+1));
-					System.out.println(status.getUser().getName() + ":" + status.getText());
+					String info = new String(status.getUser().getName() + ":" + status.getText());
+					search.add(info);
 					counter++;
 			//						
 					counterTotal++;
@@ -33,6 +38,8 @@ public final class searchTwitter  {
     		System.out.println("Number of Results: " + counter+"/"+counterTotal);
         } catch (Exception e) { System.out.println(e.getMessage()); }
      }
-	
-	
+
+	public static ArrayList<String> getSearch() {
+		return search;
+	}
 }
