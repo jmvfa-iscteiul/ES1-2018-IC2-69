@@ -7,17 +7,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.restfb.Facebook;
-
-import Facebook.searchFacebook;
-import Mail.Mail;
-import Twitter.searchTwitter;
-import twitter4j.Twitter;
-
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JTree;
+import javax.swing.ListSelectionModel;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JList;
@@ -40,20 +34,22 @@ import javax.swing.Action;
 import javax.swing.DefaultListModel;
 
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.awt.Checkbox;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JToggleButton;
 
 public class InterGraf extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtSearch;
-	private JTextField textField;
 	private DefaultListModel<String> listModel = new DefaultListModel<>();
-	private searchTwitter twitter;
-	private Facebook face;
-	private Mail mail;
+//	private Twitter tweet;
+//	private Facebook face;
+//	private Mail mail;
 
 	/**
 	 * Launch the application.
@@ -86,11 +82,6 @@ public class InterGraf extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		Scrollbar scrollbar = new Scrollbar();
-		scrollbar.setBackground(SystemColor.inactiveCaptionBorder);
-		scrollbar.setBounds(983, 125, 21, 346);
-		contentPane.add(scrollbar);
-		
 		txtSearch = new JTextField();
 		txtSearch.setText("\r\n");
 		txtSearch.setBackground(SystemColor.inactiveCaptionBorder);
@@ -98,14 +89,6 @@ public class InterGraf extends JFrame {
 		txtSearch.setBounds(552, 66, 425, 25);
 		contentPane.add(txtSearch);
 		txtSearch.setColumns(10);
-		
-		textField = new JTextField();
-		textField.setToolTipText("Search");
-		textField.setText("\r\n");
-		textField.setColumns(10);
-		textField.setBackground(SystemColor.inactiveCaptionBorder);
-		textField.setBounds(552, 506, 425, 25);
-		contentPane.add(textField);
 		
 		ArrayList<JToggleButton> tougle = new ArrayList<>();
 		
@@ -116,7 +99,6 @@ public class InterGraf extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(twitter.isSelected()) {
 					tougle.add(twitter);
-					System.out.println("twitter");
 				}
 				else{
 					tougle.remove(twitter);
@@ -130,7 +112,6 @@ public class InterGraf extends JFrame {
 		facebook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(facebook.isSelected()) {
-					System.out.println("Facebook");
 					tougle.add(facebook);
 				}
 				else{
@@ -158,26 +139,29 @@ public class InterGraf extends JFrame {
 		btnSearch.setBounds(57, 66, 379, 25);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(JToggleButton j : tougle) {
-					if(j.equals(mail)) {
-						String user = JOptionPane.showInputDialog("User:");
-						System.out.println(user);
-						String pass = JOptionPane.showInputDialog("Password:");
-						System.out.println(pass);
-						listModel.addElement("User: " + user + " Pass: " + pass);
-						//Aceder à informação dos botoes selecionados
-					}
-					if(j.equals(facebook)) {
-						for(String s : searchFacebook.getSearchFacebook()) {
-							listModel.addElement(s);
+				
+				if(txtSearch!=null) {
+					for(JToggleButton j : tougle) {
+						
+						if(j.equals(mail)) {
+							String user = JOptionPane.showInputDialog("User:");
+							System.out.println(user);
+							String pass = JOptionPane.showInputDialog("Password:");
+							System.out.println(pass);
+							//Validar dados com ficheiro xml
+							listModel.addElement("Mail - User: " + user + " Pass: " + pass + "Informação a procurar: " + txtSearch.getText());
+							//Aceder à informação dos botoes selecionados
+						}
+						
+						if(j.equals(facebook)) {
+							listModel.addElement("Face - Informação a procurar: " + txtSearch.getText());
+						}
+						
+						if(j.equals(twitter)) {
+							listModel.addElement("Twitter - Informação a procurar: " + txtSearch.getText());
 						}
 					}
-					if(j.equals(twitter)) {
-						for(String s : searchTwitter.getSearch()) {
-							listModel.addElement(s);
-						}
-					}
-				}	
+				}
 			}
 		});
 		contentPane.add(btnSearch);
@@ -188,40 +172,65 @@ public class InterGraf extends JFrame {
 				for(JToggleButton j : tougle) {
 					if(j.equals(mail)) {
 						String user = JOptionPane.showInputDialog("User:");
-						System.out.println(user);
 						String pass = JOptionPane.showInputDialog("Password:");
-						System.out.println(pass);
+						//Validar dados com xml
 						String to = JOptionPane.showInputDialog("To:");
-						System.out.println(to);
 						String subj = JOptionPane.showInputDialog("Subject:");
-						System.out.println(subj);
+						listModel.addElement("From : \n" + user + "To: " + to + "\n" + "Subject:\n" + subj);
 						
 						
 						//Aceder à informação dos botoes selecionados
 					}
 					if(j.equals(facebook)) {
-						System.out.println("Fode-te");
+//						chamar função post do face
+						String post = JOptionPane.showInputDialog("Post:");
+						listModel.addElement("Post: " + post);
+						
 					}
 					if(j.equals(twitter)) {
-						System.out.println("Puta");
+						//invocar função do twitter para publicar
+						String tweett = JOptionPane.showInputDialog("Tweet:");
+						listModel.addElement("Tweet: " + tweett);
+						listModel.addElement(tweett);
 					}
 				}
 			}
 		});
+		
+		
 		btnNewButton_3.setBounds(57, 505, 379, 25);
 		contentPane.add(btnNewButton_3);
 		
+		JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(552, 125, 425, 405);
+		contentPane.add(scrollPane);
+		
 		JList<String> list = new JList<>(listModel);
-		list.setBounds(552, 125, 415, 346);
+		scrollPane.setViewportView(list);
+				
+				
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBackground(SystemColor.inactiveCaptionBorder);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				
+				if (!e.getValueIsAdjusting()) {
+                    String selectedValuesList = (list.getSelectedValue().toString());
+                    String[] parts = selectedValuesList.split(" ");
+                
+                    if(parts[0].equals("Twitter")) {
+//                        JOptionPane.showOptionDialog(list, "Twitter",
+                           // JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, "ReTweet");
+                    }
+                    else {
+                    //	Icon blueIcon = new ImageIcon("yourFile.gif");
+                    	// JOptionPane.showInputDialog(new JPanel(), "Pick a printer", "Input", JOptionPane.QUESTION_MESSAGE,null, list, "Titan");
+                    }
+                    
+                    JOptionPane.showMessageDialog(list, selectedValuesList);
+                }
 			}
-			
+					
 		});
-//		
-		contentPane.add(list);
 		
 	}
 }
