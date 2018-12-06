@@ -266,6 +266,7 @@ public class InterGraf extends JFrame {
                     		retweet = false;
                     	}
                     	if(retweet) {
+                    		System.out.println("LOOOOOOOOOOOOOL");
                     		System.out.println("ReTweet");
                     	}
                     }
