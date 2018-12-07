@@ -11,8 +11,9 @@ import javax.swing.text.JTextComponent;
 import com.restfb.Facebook;
 
 import Mail.searchMail;
-import Twitter.searchT;
-import Facebook.searchF;
+import Twitter.tudoTwitter;
+import Facebook.searchFacebook;
+import Facebook.shareFacebook;
 import twitter4j.Twitter;
 
 import java.awt.Color;
@@ -45,6 +46,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.Checkbox;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -57,14 +59,17 @@ public class InterGraf extends JFrame {
 	private DefaultListModel<String> listModel = new DefaultListModel<>();
 	private DefaultListModel<String> listMailModel = new DefaultListModel<>();
 	private DefaultListModel<String> listaTwitterModel = new DefaultListModel<>();
-	private searchT tweet;
-	private searchF face;
+	private tudoTwitter tweet;
+	private searchFacebook face;
+	private shareFacebook face1;
 	private searchMail maill;
 	//private shareMail enviarMail;
-//	private searchT twittter;
+	//	private searchT twittter;
 	private String search;
 	private String user;
 	private String pass;
+
+	private String messagePostTweet;
 
 	/**
 	 * Launch the application.
@@ -73,6 +78,7 @@ public class InterGraf extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+
 					InterGraf frame = new InterGraf();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -86,7 +92,7 @@ public class InterGraf extends JFrame {
 	 * Create the frame.
 	 */
 	public InterGraf() {
-		
+
 		setBackground(UIManager.getColor("EditorPane.inactiveForeground"));
 		setForeground(Color.WHITE);
 		setTitle("ISCTE_APP");
@@ -97,8 +103,8 @@ public class InterGraf extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
+
 		txtSearch = new JTextField();
 		txtSearch.setText("\r\n");
 		txtSearch.setBackground(SystemColor.inactiveCaptionBorder);
@@ -107,9 +113,9 @@ public class InterGraf extends JFrame {
 		contentPane.add(txtSearch);
 		txtSearch.setColumns(10);
 		search = txtSearch.getText();
-		
+
 		ArrayList<JToggleButton> tougle = new ArrayList<>();
-		
+
 		JToggleButton twitter = new JToggleButton("Twitter");
 		twitter.setBounds(57, 125, 379, 91);
 		contentPane.add(twitter);
@@ -124,7 +130,7 @@ public class InterGraf extends JFrame {
 			}
 		});
 		contentPane.add(twitter);
-	
+
 		JToggleButton facebook = new JToggleButton("Facebook");
 		facebook.setBounds(57, 245, 379, 100);
 		facebook.addActionListener(new ActionListener() {
@@ -138,7 +144,7 @@ public class InterGraf extends JFrame {
 			}
 		});
 		contentPane.add(facebook);
-		
+
 		JToggleButton mail = new JToggleButton("Mail");
 		mail.setBounds(57, 374, 379, 91);
 		mail.addActionListener(new ActionListener() {
@@ -152,45 +158,43 @@ public class InterGraf extends JFrame {
 			}
 		});
 		contentPane.add(mail);
-		
+
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setBounds(57, 66, 379, 25);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				if(txtSearch!=null) {
 					for(JToggleButton j : tougle) {
-						
+
 						if(j.equals(mail)) {
 							user = JOptionPane.showInputDialog("User:");
-							System.out.println(user);
 							pass = JOptionPane.showInputDialog("Password:");
-							System.out.println(pass);							
-							
+
+
 							maill = new searchMail();
 							searchMail.connectMail(user, pass, getSearch());
 							for(String m : searchMail.getMailList()) {
 								listModel.addElement(m);
 							}
-							
-							
+
+
 						}
-						
+
 						if(j.equals(facebook)) {
-							face = new searchF();
-							searchF.connect(getSearch());
+							face = new searchFacebook();
+							searchFacebook.connect(getSearch());
 							//searchF.setSearch(search);
-							
-							for(String f : searchF.getSearchFacebook()) {
+
+							for(String f : searchFacebook.getSearchFacebook()) {
 								listModel.addElement(f);
 							}
 						}
-						
+
 						if(j.equals(twitter)) {
-							tweet = new searchT();
-							searchT.connectT(getSearch());
-							
-							for(String t : searchT.getSearchTwitter()) {
+							//							tweet = new tudoTwitter();
+							tudoTwitter.searchT(getSearch());
+
+							for(String t : tudoTwitter.getListT()) {
 								listModel.addElement(t);
 							}
 						}
@@ -199,84 +203,87 @@ public class InterGraf extends JFrame {
 			}
 		});
 		contentPane.add(btnSearch);
-		
+
 		JButton btnNewButton_3 = new JButton("Post");
 		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {				
 				for(JToggleButton j : tougle) {
+
 					if(j.equals(mail)) {
 						user = JOptionPane.showInputDialog("User:");
 						pass = JOptionPane.showInputDialog("Password:");
 						//Validar dados com xml
-						
+
 						String to = JOptionPane.showInputDialog("To:");
 						String subj = JOptionPane.showInputDialog("Subject:");
 						String message = JOptionPane.showInputDialog("Text Message:");
 						//listModel.addElement("From : \n" + user + "To: " + to + "\n" + "Subject:\n" + subj);
-						
-//						enviarMail= new shareMail();
-//						enviarMail.sendMail(user, pass, to, subj, message);
-						
-						
-						
+
+						//						enviarMail= new shareMail();
+						//						enviarMail.sendMail(user, pass, to, subj, message);
+						System.out.println("checpoint1");
+
+
 					}
 					if(j.equals(facebook)) {
 						String post = JOptionPane.showInputDialog("Post:");
-						listModel.addElement("Post: " + post);
-						
+						System.out.println(post);
+						face1.post(post);
+
 					}
 					if(j.equals(twitter)) {
 						//invocar fun��o do twitter para publicar
-						String tweett = JOptionPane.showInputDialog("Tweet:");
-						listModel.addElement("Tweet: " + tweett);
-						listModel.addElement(tweett);
+						String messagePostTweet = JOptionPane.showInputDialog("Tweet:");
+						tudoTwitter.makeTweet(messagePostTweet);
+
+						//						System.out.println(messagePostTweet);
 					}
 				}
 			}
 		});
-		
-		
+
+
 		btnNewButton_3.setBounds(57, 505, 379, 25);
 		contentPane.add(btnNewButton_3);
-		
+
 		JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(552, 125, 425, 405);
 		contentPane.add(scrollPane);
-		
+
 		JList<String> list = new JList<>();
 		list.clearSelection();
 		scrollPane.setViewportView(list);
 		list.setModel(listModel);
-		
+
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBackground(SystemColor.inactiveCaptionBorder);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
-                    String selectedValuesList = (list.getSelectedValue().toString());
-                    String[] parts = selectedValuesList.split(" ");
-                    if(parts[0].equals("Twitter")) {
-                    	
-                    	JCheckBox checkbox = new JCheckBox("ReTweet");
-                    	Object[] params = {list.getSelectedValue(), checkbox};
-                    	int n = JOptionPane.showConfirmDialog(null, params, "Twitter", JOptionPane.CANCEL_OPTION);
-                    	boolean retweet = checkbox.isSelected();
-                    	
-                    	if(n==2) { 
-                    		retweet = false;
-                    	}
-                    	if(retweet) {
-                    		System.out.println("ReTweet");
-                    	}
-                    }
-                }
+					String selectedValuesList = (list.getSelectedValue().toString());
+					String[] parts = selectedValuesList.split(" ");
+					if(parts[0].equals("Twitter")) {
+
+						JCheckBox checkbox = new JCheckBox("ReTweet");
+						Object[] params = {list.getSelectedValue(), checkbox};
+						int n = JOptionPane.showConfirmDialog(null, params, "Twitter", JOptionPane.CANCEL_OPTION);
+						boolean retweet = checkbox.isSelected();
+
+						if(n==2) { 
+							retweet = false;
+						}
+						if(retweet) {
+							System.out.println("ReTweet");
+						}
+					}
+				}
 			}
-					
+
 		});
-		
+
 	}
 
 	public static String getSearch() {
 		return txtSearch.getText();
 	}
-}
+};

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
@@ -22,10 +23,13 @@ import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
 
-public class Mail {
+public class searchMail {
 	
-   public static void fetch(String pop3Host, String storeType, String user,String password, String procura) {
-      try {
+	private static ArrayList<String> mails = new ArrayList<String>();
+
+	
+	public static void fetch(String pop3Host, String storeType, String user,String password, String procura) {
+		try {
          // create properties field
          Properties properties = new Properties();
          properties.put("mail.store.protocol", "pop3");
@@ -50,22 +54,18 @@ public class Mail {
          // retrieve the messages from the folder in an array and print it
          Message[] messages = emailFolder.getMessages();
          System.out.println("messages.length---" + messages.length);
-
+         
+         String date = new String();
+         
          for (int i = 0; i < 100; i++) {
             Message message = messages[i];
             if(message.getContent().toString().contains(procura)) {
-               	System.out.println("________________");
-				System.out.println("Email nº" + (i+1));
-				System.out.println("Subject: " + message.getSubject());
-				System.out.println("From: " + message.getFrom());
-				System.out.println("Text: " + message.getContent().toString());
-            	
-            	//String line = reader.readLine();
-            	//if ("YES".equals(line)) {
-            	//	message.writeTo(System.out);
-            	//} else if ("QUIT".equals(line)) {
-            	//	break;
-            	//}
+				
+				date = message.getSentDate().toString();
+				date = date.replace("WET ","");
+				date = date.replace("WEST ", "");
+				//System.out.println("Date: " + date + " From:  "+message.getFrom() + " Mensage:  "+message.getContent().toString());
+				mails.add("Date: " + date + " From:  "+message.getFrom() + " Mensage:  "+message.getContent().toString());
             }
          }
 
@@ -83,28 +83,18 @@ public class Mail {
          e.printStackTrace();
       }
    }
-   public static void main(String[] args) {
+   public static void connectMail(String user, String password, String procura) {
 
-      String host = "pop.outlook.com";// change accordingly
+      String host = "pop.outlook.com";
       String mailStoreType = "pop3";
       
-      Scanner scanner = new Scanner(System.in);
-		
-      System.out.print("User: ");
-      final String username = scanner.nextLine();
-		
-      System.out.print("Password");
-      final String password = scanner.nextLine();
-
-      System.out.print("O que procura? ");
-		String procura = scanner.nextLine();
-		
-		scanner.close();
-
-      //Call method fetch
-      fetch(host, mailStoreType, username, password, procura);
+      
+      fetch(host, mailStoreType, user, password, procura);
 
    }
 
+   public static ArrayList<String> getMailList() {
+	   return mails;
+   }
 
 }
