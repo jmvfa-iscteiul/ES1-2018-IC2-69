@@ -10,7 +10,7 @@ import javax.swing.text.JTextComponent;
 
 import com.restfb.Facebook;
 
-import Mail.searchMail;
+import Mail.*;
 import Twitter.tudoTwitter;
 import Facebook.searchFacebook;
 import Facebook.shareFacebook;
@@ -60,9 +60,11 @@ public class InterGraf extends JFrame {
 	private DefaultListModel<String> listMailModel = new DefaultListModel<>();
 	private DefaultListModel<String> listaTwitterModel = new DefaultListModel<>();
 	private tudoTwitter tweet;
+	private tudoTwitter tweet1;
 	private searchFacebook face;
 	private shareFacebook face1;
 	private searchMail maill;
+	private shareMail mail1;
 	//private shareMail enviarMail;
 	//	private searchT twittter;
 	private String search;
@@ -210,18 +212,18 @@ public class InterGraf extends JFrame {
 				for(JToggleButton j : tougle) {
 
 					if(j.equals(mail)) {
-						user = JOptionPane.showInputDialog("User:");
-						pass = JOptionPane.showInputDialog("Password:");
+						String user1 = JOptionPane.showInputDialog("User:");
+						String pass1 = JOptionPane.showInputDialog("Password:");
 						//Validar dados com xml
 
 						String to = JOptionPane.showInputDialog("To:");
 						String subj = JOptionPane.showInputDialog("Subject:");
 						String message = JOptionPane.showInputDialog("Text Message:");
 						//listModel.addElement("From : \n" + user + "To: " + to + "\n" + "Subject:\n" + subj);
-
+						
 						//						enviarMail= new shareMail();
-						//						enviarMail.sendMail(user, pass, to, subj, message);
-						System.out.println("checpoint1");
+//						mail1;
+						shareMail.sendMail(user1, pass1, to, subj, message);
 
 
 					}
@@ -233,8 +235,8 @@ public class InterGraf extends JFrame {
 					}
 					if(j.equals(twitter)) {
 						//invocar fun��o do twitter para publicar
-						String messagePostTweet = JOptionPane.showInputDialog("Tweet:");
-						tudoTwitter.makeTweet(messagePostTweet);
+						String messagePostTweet1 = JOptionPane.showInputDialog("Tweet:");
+						tudoTwitter.makeTweet(messagePostTweet1);
 
 						//						System.out.println(messagePostTweet);
 					}
