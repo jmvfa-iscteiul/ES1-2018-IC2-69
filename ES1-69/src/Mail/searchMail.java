@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package Mail;
 
 import java.io.BufferedOutputStream;
